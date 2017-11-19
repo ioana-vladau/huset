@@ -1,5 +1,5 @@
 function getAllEvents() {
-    fetch("http://ioanavladau.com/wp/wp-json/wp/v2/events?_embed")
+    fetch("http://ioanavladau.com/wp/wp-json/wp/v2/events?_embed&per_page=11")
         .then(res => res.json())
         .then(showEvents);
 }
@@ -12,7 +12,7 @@ function getAllEventsByCategory(id) {
 
 ///// GET ALL EVENTS BY TAG
 function getAllEventsByTag(id) {
-    fetch("http://ioanavladau.com/wp/wp-json/wp/v2/events?_embed&per_page=20&tags=" + id)
+    fetch("http://ioanavladau.com/wp/wp-json/wp/v2/events?_embed&per_page=11&tags=" + id)
         .then(res => res.json())
         .then(showEvents);
 }
@@ -106,15 +106,17 @@ function showEvents(data) {
         let img = clone.querySelector("img");
         let link = clone.querySelector("a.read-more");
         let priceDateTime = clone.querySelector(".price-date-time");
+        let dateTime = clone.querySelector(".date-time");
         let startTime = clone.querySelector(".time");
         let type = clone.querySelector(".type");
 
         title.textContent = theEvent.title.rendered;
 //        excerpt.innerHTML = theEvent.excerpt.rendered;
         price.textContent = theEvent.acf.price;
-        date.textContent = theEvent.acf.date;
-        type.textContent = theEvent.tags.rendered;
-        startTime.textContent = theEvent.acf.start_time;
+//        date.textContent = theEvent.acf.date;
+
+//        startTime.textContent = theEvent.acf.start_time;
+        dateTime.textContent = theEvent.acf.date + " at " + theEvent.acf.start_time;
 //        console.log(theEvent._embedded["wp:featuredmedia"][0].media_details.sizes.thumbnail.source_url);
          img.setAttribute("src", theEvent._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url);
 
@@ -137,10 +139,10 @@ getTagsMenu();
 if(id){
     getSingleEventById(id);
 }
-if(categoryid){
+else if(categoryid){
     getAllEventsByCategory(categoryid);
 }
-if(tagid){
+else if(tagid){
     getAllEventsByTag(tagid);
 }else{
     getAllEvents();

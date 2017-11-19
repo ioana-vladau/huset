@@ -44,6 +44,7 @@ function showSingleEvent(json){
     img.setAttribute("src", json._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url);
     document.querySelector("#single .location span").textContent = json.acf.location;
     document.querySelector("#single .start-time span").textContent = json.acf.start_time;
+    document.querySelector("#single .content").innerHTML = json.content.rendered;
 
 
 //    let h1 = document.querySelector("#single h1");
